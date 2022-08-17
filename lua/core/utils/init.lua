@@ -25,7 +25,7 @@ local supported_configs = { astronvim.install.home, astronvim.install.config }
 -- @return the loaded module if successful or nil
 local function load_module_file(module)
   -- placeholder for final return value
-  jdyun.debug_print("load_module_file() " .. module)
+  jdyun.debug_print("    call load_module_file() " .. module)
 
   local found_module = nil
   -- search through each of the supported configuration locations
@@ -227,13 +227,13 @@ function astronvim.user_plugin_opts(module, default, extend, prefix)
   -- if no default table is provided set it to an empty table
   default = default or {}
   jdyun.debug_print(
-    "\t"
+      "    "
       .. "call user_plugin_opts("
       .. module
       .. ","
       .. "default"
       .. ","
-      .. tostring(extend) 
+      .. tostring(extend)
       .. ","
       .. prefix
       .. ") from : "
