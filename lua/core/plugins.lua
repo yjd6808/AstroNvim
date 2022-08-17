@@ -296,7 +296,7 @@ if status_ok then
         threshold = 0.0001,
       },
       git = {
-        clone_timeout = 300,
+        clone_timeout = 50000,
         subcommands = {
           update = "pull --rebase",
         },

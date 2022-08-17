@@ -25,13 +25,18 @@ local supported_configs = { astronvim.install.home, astronvim.install.config }
 -- @return the loaded module if successful or nil
 local function load_module_file(module)
   -- placeholder for final return value
+  jdyun.debug_print("load_module_file() " .. module)
+
   local found_module = nil
   -- search through each of the supported configuration locations
   for _, config_path in ipairs(supported_configs) do
     -- convert the module path to a file path (example user.init -> user/init.lua)
     local module_path = config_path .. "/lua/" .. module:gsub("%.", "/") .. ".lua"
     -- check if there is a readable file, if so, set it as found
-    if vim.fn.filereadable(module_path) == 1 then found_module = module_path end
+    if vim.fn.filereadable(module_path) == 1 then
+      found_module = module_path
+      jdyun.debug_print("load_module_file() " .. module .. " ==> found !!")
+    end
   end
   -- if we found a readable lua file, try to load it
   if found_module then
@@ -40,6 +45,7 @@ local function load_module_file(module)
     -- if successful at loading, set the return variable
     if status_ok then
       found_module = loaded_module
+      jdyun.debug_print("load_module_file() " .. module .. " ==> require success !!")
     -- if unsuccessful, throw an error
     else
       vim.api.nvim_err_writeln("Error loading file: " .. found_module)
@@ -191,6 +197,21 @@ function astronvim.vim_opts(options)
   end
 end
 
+function astronvim.traceback()
+  local level = 1
+  while true do
+    local info = debug.getinfo(level, "Sl")
+    if not info then break end
+    if info.what == "C" then -- is a C function?
+      print(level, "C function")
+    else -- a Lua function
+      print(string.format("[%s]:%d", info.short_src, info.currentline))
+    end
+    level = level + 1
+  end
+  print "=========================================="
+end
+
 --- User configuration entry point to override the default options of a configuration table with a user configuration file or table in the user/init.lua user settings
 -- @param module the module path of the override setting
 -- @param default the default settings that will be overridden
@@ -200,10 +221,27 @@ end
 function astronvim.user_plugin_opts(module, default, extend, prefix)
   -- default to extend = true
   if extend == nil then extend = true end
+  if prefix == nil then prefix = "user" end
+  if module == nil then jdyun.debug_print("module is null") end
+
   -- if no default table is provided set it to an empty table
   default = default or {}
-  -- try to load a module file if it exists
-  local user_settings = load_module_file((prefix or "user") .. "." .. module)
+  jdyun.debug_print(
+    "\t"
+      .. "call user_plugin_opts("
+      .. module
+      .. ","
+      .. "default"
+      .. ","
+      .. tostring(extend) 
+      .. ","
+      .. prefix
+      .. ") from : "
+      .. jdyun.parent_function_info()
+  )
+
+  -- try to load a module file if itl exists
+  local user_settings = load_module_file(prefix .. "." .. module)
   -- if no user module file is found, try to load an override from the user settings table from user/init.lua
   if user_settings == nil and prefix == nil then user_settings = user_setting_table(module) end
   -- if a user override was found call the configuration engine
