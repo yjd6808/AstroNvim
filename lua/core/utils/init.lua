@@ -35,7 +35,6 @@ local function load_module_file(module)
     -- check if there is a readable file, if so, set it as found
     if vim.fn.filereadable(module_path) == 1 then
       found_module = module_path
-      jdyun.debug_print("load_module_file() " .. module .. " ==> found !!")
     end
   end
   -- if we found a readable lua file, try to load it
@@ -45,7 +44,8 @@ local function load_module_file(module)
     -- if successful at loading, set the return variable
     if status_ok then
       found_module = loaded_module
-      jdyun.debug_print("load_module_file() " .. module .. " ==> require success !!")
+      jdyun.debug_print("    load_module_file() " .. module .. " ==> require success !!")
+      jdyun.debug_print_stack_trace()
     -- if unsuccessful, throw an error
     else
       vim.api.nvim_err_writeln("Error loading file: " .. found_module)
