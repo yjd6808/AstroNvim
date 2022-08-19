@@ -1,14 +1,6 @@
 local astro_plugins = {
 
   -- =============================================
-  -- 내가 추가해준 플러그인
-  -- =============================================
-
-  -- inspect 플러그인 : 변수 정보를 자세히 조사할 수 있는
-  -- 사람이 읽기 좋은 형태로 가공해줌
-  ["kikito/inspect.lua"] = {},
-
-  -- =============================================
   -- 기존에 설치된 플러그인들
   -- =============================================
   -- Plugin manager
@@ -293,6 +285,11 @@ local status_ok, packer = pcall(require, "packer")
 if status_ok then
   packer.startup {
     function(use)
+      local user_plugins = user_plugin_opts("plugins.init", nil, false)
+      jdyun.debug_print "사용자가 추가한 플러그인 목록"
+      for _, plugin in pairs(user_plugins) do
+        jdyun.debug_print(plugin[1])
+      end
       for key, plugin in pairs(user_plugin_opts("plugins.init", astro_plugins)) do
         if type(key) == "string" and not plugin[1] then plugin[1] = key end
         jdyun.debug_print("use plugin : " .. plugin[1])

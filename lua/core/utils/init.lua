@@ -33,9 +33,7 @@ local function load_module_file(module)
     -- convert the module path to a file path (example user.init -> user/init.lua)
     local module_path = config_path .. "/lua/" .. module:gsub("%.", "/") .. ".lua"
     -- check if there is a readable file, if so, set it as found
-    if vim.fn.filereadable(module_path) == 1 then
-      found_module = module_path
-    end
+    if vim.fn.filereadable(module_path) == 1 then found_module = module_path end
   end
   -- if we found a readable lua file, try to load it
   if found_module then
@@ -71,6 +69,8 @@ astronvim.url_matcher =
 -- @param default the default configuration table
 -- @param extend boolean value to either extend the default or simply overwrite it if an override is provided
 -- @return the new configuration table
+--
+-- 함수 또는 테이블이 아닐 경우에는 extend 효과가 없다.
 local function func_or_extend(overrides, default, extend)
   -- if we want to extend the default with the provided override
   if extend then
@@ -221,13 +221,11 @@ end
 function astronvim.user_plugin_opts(module, default, extend, prefix)
   -- default to extend = true
   if extend == nil then extend = true end
-  if prefix == nil then prefix = "user" end
-  if module == nil then jdyun.debug_print("module is null") end
 
   -- if no default table is provided set it to an empty table
   default = default or {}
   jdyun.debug_print(
-      "    "
+    "    "
       .. "call user_plugin_opts("
       .. module
       .. ","
@@ -235,16 +233,22 @@ function astronvim.user_plugin_opts(module, default, extend, prefix)
       .. ","
       .. tostring(extend)
       .. ","
-      .. prefix
+      .. tostring(prefix or "user")
       .. ") from : "
       .. jdyun.parent_function_info()
   )
 
   -- try to load a module file if itl exists
-  local user_settings = load_module_file(prefix .. "." .. module)
+  local user_settings = load_module_file((prefix or "user") .. "." .. module)
   -- if no user module file is found, try to load an override from the user settings table from user/init.lua
   if user_settings == nil and prefix == nil then user_settings = user_setting_table(module) end
-  -- if a user override was found call the configuration engine
+
+  -- extend가 참인 경우 기존default 설정들에 user.init의 기존 세팅을 더해준다.
+  -- extend가 거짓인 경우 단순히 default = user_settings로 덮어쒸워준다.(override)
+  --
+  -- user_settings가 함수 또는 테이블이 아닐 경우에는 extend(확장) 효과가 적용이 안된다.
+  -- 테이블 형태가 아닌 단일 설정인 경우(예를 들어서 user.init의 colorsheme)의 값을 가져오고 싶으면
+  -- extend를 명시적으로 false로 전달해줘야 가져올 수 있다.
   if user_settings ~= nil then default = func_or_extend(user_settings, default, extend) end
   -- return the final configuration table with any overrides applied
   return default

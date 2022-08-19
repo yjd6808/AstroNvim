@@ -92,6 +92,7 @@ astronvim.lsp.capabilities.textDocument.completion.completionItem.resolveSupport
 astronvim.lsp.capabilities = user_plugin_opts("lsp.capabilities", astronvim.lsp.capabilities)
 astronvim.lsp.flags = user_plugin_opts "lsp.flags"
 
+-- jdyun : 여기서 lsp 플래그, 캐퍼빌러티 세팅을 한다.
 function astronvim.lsp.server_settings(server_name)
   local server = require("lspconfig")[server_name]
   local opts = user_plugin_opts(

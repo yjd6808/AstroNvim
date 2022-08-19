@@ -19,6 +19,7 @@ alpha.setup(astronvim.user_plugin_opts("plugins.alpha", {
         "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
         "    ██   ████   ████   ██ ██      ██",
       }, false),
+      jdyun.debug_print(inspect(val)),
       opts = { position = "center", hl = "DashboardHeader" },
     },
     { type = "padding", val = 5 },
