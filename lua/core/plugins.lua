@@ -288,7 +288,7 @@ if status_ok then
       local user_plugins = user_plugin_opts("plugins.init", nil, false)
       jdyun.debug_print "사용자가 추가한 플러그인 목록"
       for _, plugin in pairs(user_plugins) do
-        jdyun.debug_print(plugin[1])
+        jdyun.debug_print(_)
       end
       for key, plugin in pairs(user_plugin_opts("plugins.init", astro_plugins)) do
         if type(key) == "string" and not plugin[1] then plugin[1] = key end
