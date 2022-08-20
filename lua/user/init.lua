@@ -38,7 +38,7 @@ local config = {
     x = {},
   },
 
-   -- LuaSnip Options
+  -- LuaSnip Options
   luasnip = {
     -- Add paths for including more VS Code style snippets in luasnip
     vscode_snippet_paths = {},
@@ -79,5 +79,15 @@ local config = {
     },
   },
 }
+
+-- 빔 스크립트 실행 꼼수
+-- [[ ]]이렇게 묶으면 여러줄의 문자열을 작성할 수 있음.
+--
+-- 플러그인 삭제방법은 cmd 내부 문자열들 다 지우고 PlugClean 실행해주면 삭제할 수 있음
+vim.cmd [[
+  call plug#begin()
+    
+  call plug#end()
+]]
 
 return config
