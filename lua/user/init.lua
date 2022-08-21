@@ -85,9 +85,9 @@ local config = {
 --
 -- 플러그인 삭제방법은 cmd 내부 문자열들 다 지우고 PlugClean 실행해주면 삭제할 수 있음
 vim.cmd [[
-  call plug#begin()
+  " call plug#begin()
     
-  call plug#end()
+  " call plug#end()
 ]]
 
 return config
