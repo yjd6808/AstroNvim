@@ -110,4 +110,28 @@ astronvim.conditional_func(astronvim.user_plugin_opts("polish", nil, false))
 -- 방법 2.
 -- vim.cmd('source my_vim_script.vim')
 
-local a = 40
+-- 대문자 커맨드 추가
+-- write대신 wall로 모든 문서가 저장되도록 함
+-- -bang은 느낌표 가능여부
+-- <line1>,<line2>는 텍스트 시작 위치(0) 텍스트 끝 위치(118줄이면 118)
+-- 즉 W! 명령이 0,118wall! <현재 파일이름> 이라고생각하면 됨
+vim.cmd [[
+
+  command! -bang -range=% -complete=file -nargs=* WriteQuit <line1>,<line2>write<bang> <args> | quit<bang>
+
+  " Q! 커맨드 추가
+  command! -bang Q quit<bang> 
+
+  " W! 커맨드 추가
+  command! -bang -range=% -complete=file -nargs=* W wall<bang> <args>
+
+  " Wq! 커맨드 추가
+  command! -bang -range=% -complete=file -nargs=* Wq wall<bang> <args> | quit<bang>
+
+  " WQ! 커맨드 추가
+  command! -bang -range=% -complete=file -nargs=* WQ wall<bang> <args> | quit<bang>
+
+  " wq가 Wq!로 확장되도록 한다.
+  noreab wq Wq!
+  noreab wa W!
+]]
