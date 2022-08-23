@@ -35,9 +35,19 @@ local config = {
       ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
       ["<C-s>"] = { ":w!<cr>", desc = "Save File" },
       ["<esc><esc>"] = { ":noh<cr>", desc = "Clear Selections" },
+      ["<tab>"] = { ">>", desc = "Forward indent" },
+      ["<S-tab>"] = { "<<", desc = "Backward indent" },
+      ["<S-F5>"] = { ":VimspectorReset", desc = "" },
     },
 
-    x = {},
+    i = {
+      ["<tab>"] = { "<C-T>", desc = "Forward indent" },
+      ["<S-tab>"] = { "<C-D>", desc = "Backward indent" },
+    },
+    x = {
+      ["<tab>"] = { ">>", desc = "Forward indent" },
+      ["<S-tab>"] = { "<<", desc = "Backward indent" },
+    },
   },
 
   -- LuaSnip Options
