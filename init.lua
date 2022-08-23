@@ -65,6 +65,10 @@ _G.jdyun = {
   end,
 }
 
+-- # ========================================================================================
+--          nvim 초기화 시작
+-- # ========================================================================================
+
 jdyun.debug_print("스크립트 실행 경로 : " .. jdyun.script_file_path())
 jdyun.debug_print("nvim 설치 경로 : " .. vim.fn.stdpath "data")
 
@@ -81,6 +85,7 @@ for _, source in ipairs {
   "core.autocmds",
   "core.mappings",
   "configs.which-key-register",
+  "user.autocmds",
 } do
   jdyun.debug_print "=============================================="
   jdyun.debug_print(source .. " 로딩 시작")
@@ -90,3 +95,19 @@ for _, source in ipairs {
 end
 
 astronvim.conditional_func(astronvim.user_plugin_opts("polish", nil, false))
+
+-- lua에서 vim script 실행방법
+-- https://vonheikemen.github.io/devlog/tools/configuring-neovim-using-lua/
+--
+-- [[]]: 이거 사이에 줄바꿈 문자열 작성가능함
+--
+-- 방법 1.
+-- vim.cmd [[
+--   syntax enable
+--   colorscheme rubber
+-- ]]
+--
+-- 방법 2.
+-- vim.cmd('source my_vim_script.vim')
+
+local a = 40

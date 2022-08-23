@@ -6,9 +6,11 @@ local config = {
     local_vim.opt.relativenumber = true
     local_vim.opt.tabstop = 4
     local_vim.opt.shiftwidth = 4
+    local_vim.opt.ignorecase = true
 
     -- 글로벌 변수 설정
     local_vim.g.mapleader = " "
+    local_vim.g.vimspector_enable_mappings = "VISUAL_STUDIO"
     return local_vim
   end,
 
