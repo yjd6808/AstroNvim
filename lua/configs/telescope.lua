@@ -1,7 +1,6 @@
 local status_ok, telescope = pcall(require, "telescope")
 if not status_ok then return end
 local actions = require "telescope.actions"
-
 astronvim.conditional_func(telescope.load_extension, pcall(require, "notify"), "notify")
 astronvim.conditional_func(telescope.load_extension, pcall(require, "aerial"), "aerial")
 

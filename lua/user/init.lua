@@ -27,29 +27,6 @@ local config = {
     },
   },
 
-  mappings = {
-    n = {
-      ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
-      ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
-      ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
-      ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
-      ["<C-s>"] = { ":w!<cr>", desc = "Save File" },
-      ["<esc><esc>"] = { ":noh<cr>", desc = "Clear Selections" },
-      ["<tab>"] = { ">>", desc = "Forward indent" },
-      ["<S-tab>"] = { "<<", desc = "Backward indent" },
-      ["<S-F5>"] = { ":VimspectorReset", desc = "" },
-    },
-
-    i = {
-      ["<tab>"] = { "<C-T>", desc = "Forward indent" },
-      ["<S-tab>"] = { "<C-D>", desc = "Backward indent" },
-    },
-    x = {
-      ["<tab>"] = { ">>", desc = "Forward indent" },
-      ["<S-tab>"] = { "<<", desc = "Backward indent" },
-    },
-  },
-
   -- LuaSnip Options
   luasnip = {
     -- Add paths for including more VS Code style snippets in luasnip
