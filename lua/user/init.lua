@@ -1,6 +1,7 @@
 local config = {
 
-  colorscheme = "vscode",
+  -- colorscheme = "vscode",
+  colorscheme = "default_theme",
   options = function(local_vim)
     -- 옵션 설정
     local_vim.opt.relativenumber = true
